@@ -149,3 +149,8 @@ def main():
                             its_time_to_go[i] = time1
                             break
 
+
+                           
+                        
+if __name__ == '__main__':
+    main()
