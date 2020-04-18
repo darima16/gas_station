@@ -1,6 +1,6 @@
 """
 Case№10: The gas station
-Developers: Zhambaeva D., Rashidova A., Ganbat S.
+Developers: Zhambaeva D.(48%), Rashidova A.(46%), Ganbat S. (52%)
 """
 
 from random import randint
