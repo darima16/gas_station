@@ -22,7 +22,7 @@ def time_for_oil(volume):
 def get_value():
     """Getting value from reading azs.txt"""
 
-    with open('azs.txt', 'r') as f:
+    with open('azs.txt', 'r', encoding='utf-8') as f:
         text = f.readlines()
         text = [line.strip() for line in text]
         value = len(text)
@@ -34,7 +34,7 @@ def azs():
 
     azs_info = {}
 
-    with open('azs.txt', 'r') as f:
+    with open('azs.txt', 'r', encoding='utf-8') as f:
         text = f.readlines()
         text = [line.strip() for line in text]
 
@@ -52,11 +52,11 @@ def azs():
     return azs_info
 
 
-def clients_readinig():
-    '''Readind input.txt and analyzing'''
+def clients_reading():
+    '''Reading input.txt and analyzing'''
 
     clients_info = {}
-    with open('input.txt', 'r') as f:
+    with open('input.txt', 'r', encoding='utf-8') as f:
         text = f.readlines()
         text = [line.strip() for line in text]
         for i in range(len(text)):
@@ -124,7 +124,7 @@ def main():
     queue_col = queue_column()
     azs_info = azs()
     price_oil_dict = price_oil()
-    clients = clients_readinig()
+    clients = clients_reading()
     value = get_value()
     for n in range(1, num_of_columns + 1):
         evaluation_num[n] = 0
