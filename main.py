@@ -85,6 +85,24 @@ def price_oil():
     return price_oil_list
 
 
+def queue_column():
+    '''Preparing the columns for customers'''
+
+    num_queue = dict()
+    gasoline_brands_list = [AI_80, AI_92, AI_95, AI_98]
+    for brand in gasoline_brands_list:
+        num_queue[brand] = 0
+    return  num_queue
+
+
+def time(hours):
+    """Counting the number of minutes."""
+
+    h, m = hours.split(':')
+    minutes = int(h) * 60 + int(m)
+    return minutes
+
+
 def back_time(minutes):
     """Determining the time."""
 
@@ -148,9 +166,54 @@ def main():
                                     clients[evaluation_list[j][f]]['time_to_go'] = time1
                             its_time_to_go[i] = time1
                             break
+            if condition == 0:
+                print(V, back_time(i), NEW_CLIENT, back_time(i),
+                      clients[i]['oil'], clients[i]['V'],
+                      clients[i]['time_to_stop'], COULD_NOT_FILL_THE_CAR)
+                queue += 1
 
+            for k in range(1, value + 1):
+                print(MACHINE_NUMBER, k, MAX_QUEUE, azs_info[str(k)]['max'],
+                      GASOLINE_BRANDS, *(azs_info[str(k)]['oil']),
+                      '->', '*' * evaluation_num[k])
 
-                           
-                        
+        if i in its_time_to_go.values():
+            for n, m in its_time_to_go.items():
+                if m == i:
+                    for o, p in evaluation_list.items():
+                        if n in p:
+                            evaluation_list[o].remove(n)
+            g = 0
+            arrived_with_repeat_departure = []
+            lst = list(its_time_to_go.values())
+            Lst = list(its_time_to_go.keys())
+            for z in range(len(its_time_to_go.keys())):
+                if i == lst[z]:
+                    g += 1
+                    arrived_with_repeat_departure.append(Lst[z])
+            for s in range(g):
+                arrive = arrived_with_repeat_departure[s]
+                l = clients[arrive]['station']
+                evaluation_num[l] -= 1
+                print(V, back_time(i), CLIENT, back_time(arrive),
+                      clients[arrive]['oil'], clients[arrive]['V'],
+                      clients[arrive]['time_to_stop'], FILLED_THE_CAR)
+                for k in range(1, value + 1):
+                    print(MACHINE_NUMBER, k, MAX_QUEUE, azs_info[str(k)]['max'], GASOLINE_BRANDS,
+                          *(azs_info[str(k)]['oil']),
+                          '->', '*' * evaluation_num[k])
+                its_time_to_go.pop(arrive)
+
+    print(TOTAL_SOLD_LITRES)
+    for key in queue_col:
+        print(key, ':', queue_col[key], sep='')
+    money = 0
+    our_patrol = [AI_80, AI_92, AI_98, AI_95]
+    for p in our_patrol:
+        money += queue_col[p] * price_oil_dict[p]
+    print(TOTAL_REVENUE, money)
+    print(LEFT_AZS, queue)
+
+                      
 if __name__ == '__main__':
     main()
