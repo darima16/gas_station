@@ -83,3 +83,69 @@ def price_oil():
     price_oil_list[AI_95] = 46
     price_oil_list[AI_98] = 51
     return price_oil_list
+
+
+def back_time(minutes):
+    """Determining the time."""
+
+    h = minutes // 60
+    m = minutes - h * 60
+    if h < 10:
+        h = '0' + str(h)
+    if m < 10:
+        m = '0' + str(m)
+    phrase = str(h) + ':' + str(m)
+    return phrase
+
+
+def main():
+
+    num_of_columns = get_value()
+    evaluation_num = dict()
+    evaluation_list = dict()
+    queue_col = queue_column()
+    azs_info = azs()
+    price_oil_dict = price_oil()
+    clients = clients_readinig()
+    value = get_value()
+    for n in range(1, num_of_columns + 1):
+        evaluation_num[n] = 0
+        evaluation_list[n] = []
+    its_time_to_go = dict()
+    queue = 0
+
+    for i in range(1440):
+        condition = 0
+        if i in clients.keys():
+            patrol = clients[i]['oil']
+            mini = 1000
+            for j in range(1, num_of_columns + 1):
+                if patrol in azs_info[str(j)]['oil']:
+                    if evaluation_num[j] < int(azs_info[str(j)]['max']):
+                        if evaluation_num[j] < mini:
+                            mini = evaluation_num[j]
+                            evaluation_num[j] += 1
+
+                            print(V, back_time(i), NEW_CLIENT, back_time(i),
+                                  clients[i]['oil'], clients[i]['V'],
+                                  clients[i]['time_to_stop'], QUEUE, j)
+
+                            evaluation_list[j].append(i)
+                            condition = 1
+                            queue_col[clients[i]['oil']] += int(clients[i]['V'])
+                            clients[i].update({'station': j})
+                            counting_wait = 0
+                            if len(evaluation_list[j]) == 1:
+                                time1 = clients[evaluation_list[j][0]]['time_to_go']
+                            if len(evaluation_list[j]) > 1:
+                                time1 = clients[evaluation_list[j][0]]['time_to_go']
+                                its_time_to_go[i] = time1
+                                counting_wait = clients[evaluation_list[j][0]]['time_to_stop']
+                                for f in range(1, len(evaluation_list[j])):
+                                    r = evaluation_list[j][f]
+                                    counting_wait += clients[r]['time_to_stop']
+                                    time1 = evaluation_list[j][0] + counting_wait
+                                    clients[evaluation_list[j][f]]['time_to_go'] = time1
+                            its_time_to_go[i] = time1
+                            break
+
